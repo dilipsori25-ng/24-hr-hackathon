@@ -1,124 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>geolocation api</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        *{
+            padding:0;
         }
-
-        #container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgb(104, 156, 224);
-              padding: 50px;
-            border-radius: 10px;
-             margin: 200px;
-        }
-
-        #select{
-        
-
-        }
-
-        body {
-            background-color: rgba(216, 185, 127, 0.274);
-        }
- 
-  
-      @media (max-width: 600px) {
-        body {
-            font-size: 14px;
-        }
-         
-    }
-    
-    #formValidate input{
-      padding : 10px
-    }
-    </style>
+     </style>
 </head>
-
-  
 <body>
     
-   
-         
-    
-    <div id="container">
-        <form id="formValidate">
-            <p>user name</p>
-            <input type="text"  id="fname">
+<<button id="find-me">Show my location</button><br />
+<p id="status"></p>
+<a id="map-link" href="" target="_blank">Location unknown</a>
 
 
+ <script>
+      /*function locate(){
+        let result = document.getElementById("result")
+        let maplink = document.getElementById("maplink")
 
-            <p>Email id </p>
-            <input type="text" id="mail">
+        maplink.href="";
+        maplink.textContent ="";
+        function success(position){
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
 
-
-            <p>password</p>
-            <input type="password" id="pass">
-
-            <p>select country</p>
-            <select name="country" id="select">
-                <option value="1" disabled>choose</option>
-                <option value="2">USA</option>
-                <option value="3">INDIA</option>
-                <option value="4">UAE</option>
-                <option value="5">JAPAN</option>
-            </select>
-            <br>
-            <br>
-
-            <p><input type="submit" value="submit"></p>
-
-
-            <div class="resul">
-
-            </div>
-
-        </form>
-    </div>
-
-    <script>
-        let form = document.getElementById("formValidate");
-        form.onsubmit = function () {
-            let arr = [];
-            arr[0] = document.getElementById("fname").value
-            arr[1] = document.getElementById("mail").value
-            arr[2] = document.getElementById("pass").value
-            arr[3] = document.getElementById("select").value
-
-
-            if (arr[0] == "dilip") {
-                if (arr[2] == 123456 && arr[1] == "soridilip@gmail.com") {
-                    alert("successful");
-                    localStorage.setItem("username", arr[0])
-                    localStorage.setItem("mail", arr[1])
-                    localStorage.setItem("pass", arr[2])
-                    localStorage.setItem("select", arr[3])
-
-                }
-                else {
-                    alert("required name")
-                    localStorage.setItem("value", arr[0])
-
-                }
-
-            } else {
-                alert("invalid user name or password")
-            }
+            status.textContent = "";
+            mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+            mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
         }
 
+        if(navigator.geolocation){
+            result.innerHTML = "Loading...."
+            navigator.geolocation.getCurrentPosition(success,error);
 
-    </script>
+        }else{
+            result.innerHTML = "geolocation isn't supported by the browser ";
+        }
+              const id = navigator.geolocation.watchPosition(successCallback, errorCallback);  
+
+      }
+      function error(){
+        result.innerHTML = "unable to retrive location"
+      }
+      function success(position){
+        result.innerHTML =  `Latitude : ${position.coords.latitude} <br>longitude : ${position.coords.longitude}`
+      } */
+
+      function geoFindMe() {
+  const status = document.querySelector("#status");
+  const mapLink = document.querySelector("#map-link");
+
+  mapLink.href = "";
+  mapLink.textContent = "";
+
+  function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    status.textContent = "";
+    mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+    mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+  }
+
+  function error() {
+    status.textContent = "Unable to retrieve your location";
+  }
+
+  if (!navigator.geolocation) {
+    status.textContent = "Geolocation is not supported by your browser";
+  } else {
+    status.textContent = "Locating…";
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+}
+
+document.querySelector("#find-me").addEventListener("click", geoFindMe);
+
+ </script>
 </body>
-
 </html>
